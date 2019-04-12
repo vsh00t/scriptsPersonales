@@ -1,0 +1,88 @@
+
+## Configurar Telegram ##
+
+1. Abrir telegram, buscar el usuario botFather e iniciar chat con ese usuario.
+2. Escribir "/newbot"
+3. Escribir un nombre para el bot, el nombre debe terminar en la palabra "bot" ej. "monitoreobot"
+4. Una vez que se haya aceptado el nombre en el chat aparecerá una cadena de caracteres despues de "API:" este es el token del API. 
+5. Cerrar el chat e ir al menú de telegram, buscar la opción "Nuevo Canal" y especificar un nombre, y aceptar. 
+6. Elegir canal público y especificar un enlace permanente ej. "CanalMonitoreo" y aceptar. 
+7. Abrir el canal, seleccionar en el título hasta que aparezcan las opciones.
+8. Abrir en suscriptores, añadir a todos los contactos que van a estar en el canal y al robot creado en el paso 3. 
+9. Elegir Administradores y añadir al robot creado en el paso 3. 
+10. Fin de la configuración en telegram seguir en la máquina linux. 
+
+## Configurar PC o servidor ##
+
+1. Crear un directorio para almacenar los scripts.
+2. Crear el archivo telegramDef.sh
+
+$ touch telegramDef.sh
+$ chmod +x telegramDef.sh
+$ nano telegramDef.sh
+
+3. Insertar lo siguiente: 
+
+#!/bin/bash
+
+message="EL SITIO WEB FUE MODIFICADO"
+apiToken=560148797:XXXd_xxxXX-XXXXXXXXXXXXXXXXX
+chatId=@XXXXXXX
+
+        curl -s \
+        -X POST \
+        https://api.telegram.org/bot$apiToken/sendMessage \
+        -d text="$message" \
+        -d chat_id=$chatId
+
+4. Reemplazar donde dice apiToken por el token del paso 4 del procedimiento de telegram. 
+5. Reemplazar donde dice "chatId" por el id del paso 6 del procedimiento de telegram. 
+6. Reemplazar message por lo que se desee que contenga el mensaje enviado.
+7. Ejecutar los siguientes comandos
+
+$ curl https://www.sitio.com |grep -v "www.sitio.com/?wordfence" > base.txt
+$ md5sum base.txt
+
+8. Copiar el resultado obtenido. 
+9. Crear un archivo deface.sh
+
+$ touch deface.sh
+$ chmod -x deface.sh
+$ nano deface.sh
+
+10. Insertar lo siguiente:
+
+!/bin/bash
+
+while :
+do
+
+curl https://www.sitio.com |grep -v "www.sitio.com/?wordfence" > base.txt
+md5sum base.txt > base.md5
+md5=$( cat base.md5 | sed 's/\|/ /'|awk '{print $1}' )
+
+if [ $md5 == 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXX' ]
+
+then
+
+echo "[+] OK"
+        else
+#echo "FAIL"
+sh /ruta/script/telegramDef.sh
+
+fi
+
+sleep 120
+done
+
+11. Reemplazar las XXXXXXXXXXXXXXXXXXXXXXXXX por el resultado del paso 8. 
+12. Reemplazar /ruta/script/ por la ruta donde está el archivo telegramDef.sh
+13. Reemplazar 120 por el tiempo en segundos del intervalo deseado de monitoreo. 
+13. Ejecutar el script
+
+$ ./deface.sh 
+CTRL + Z
+$ bg
+
+Done!
+
