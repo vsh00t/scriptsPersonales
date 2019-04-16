@@ -1,0 +1,23 @@
+Instructivo para bloquear acceso a los servicios corporativos desde la red TOR
+* Paso 2 en base a la configuración de un firewall con sistema operativo PAN-OS, sin embargo la configuración debería ser similar para cualquier marca.  
+
+# Crear la lista de Nodos de Salida de TOR 
+
+1. Generar la lista a partir de la publicación en https://check.torproject.org/exit-addresses. 
+- En un equipo con linux y apache ejecutar el siguiente comando.
+$ curl -s 'https://check.torproject.org/exit-addresses' |grep ExitAddress |sed 's/\|/ /'|awk '{print $2}' > /directorio/raiz/web/torips.jso
+- Para que la actualización sea constante, añadir esta linea en el archivo de configuración de cron. 
+$ crontab -e
+@hourly curl -s 'https://check.torproject.org/exit-addresses' |grep ExitAddress |sed 's/\|/ /'|awk '{print $2}' > /directorio/raiz/web/torips.json
+- En el caso de no tener un equipo con linux para generar la lista, esta se encuentra en el formato adecuado en la siguiente url. 
+https://www.sygma-ec.com/torips.json
+
+2. Acceder al Equipo Firewall. 
+- Clic en "Objects".
+- En el menú izquierdo, clic en "External Dinamic List". 
+- Clic en "Add"
+- En Type seleccionar "IP List", en Source colocar la dirección del servidor internet del punto 1 o el link  https://www.sygma-ec.com/torips.json. 
+- En Certificate Profile "None" y en Repear "Hourly"
+- Guardar la configuración. 
+- Crear una regla en la que se realiza el bloqueo a los servicios a proteger cuando el origen sea la Lista Dinámica Externa creada en el punto 17. 
+- Al cabo de un momento se encolará la tarea de poblar la lista de ips con las que están en el servidor web e iniciará el bloqueo. 
