@@ -19,5 +19,5 @@ https://www.sygma-ec.com/torips.json
 - En Type seleccionar "IP List", en Source colocar la dirección del servidor internet del punto 1 o el link  https://www.sygma-ec.com/torips.json. 
 - En Certificate Profile "None" y en Repear "Hourly"
 - Guardar la configuración. 
-- Crear una regla en la que se realiza el bloqueo a los servicios a proteger cuando el origen sea la Lista Dinámica Externa creada en el punto 17. 
+- Crear una regla en la que se realiza el bloqueo a los servicios a proteger cuando el origen sea la Lista Dinámica Externa creada en el punto 1. 
 - Al cabo de un momento se encolará la tarea de poblar la lista de ips con las que están en el servidor web e iniciará el bloqueo. 
