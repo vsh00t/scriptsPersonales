@@ -38,4 +38,4 @@ echo "source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> 
 echo "source ~/.zshplugins/colored-man-pages.plugin.zsh" >> .zshrc
 echo "source ~/.zshplugins/sudo.plugin.zsh" >> .zshrc
 source  ~/.zshrc
-usermon -s /bin/zsh $name
+sudo usermon -s /bin/zsh $name
