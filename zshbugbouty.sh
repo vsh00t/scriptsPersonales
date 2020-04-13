@@ -1,7 +1,7 @@
 # Fuente: https://www.youtube.com/watch?v=MF4qRSedmEs
 # Fuente: https://awesomelists.net/275-ZSH%20Plugins/0-All--page1--sortBy-stars/
 # Fuente: https://github.com/nahamsec/bbht
-
+name=$(whoami)
 sudo apt install curl wget man zsh scrub
 wget https://github.com/Peltoche/lsd/releases/download/0.17.0/lsd-musl_0.17.0_amd64.deb
 wget https://github.com/sharkdp/bat/releases/download/v0.13.0/bat_0.13.0_amd64.deb
@@ -38,3 +38,4 @@ echo "source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> 
 echo "source ~/.zshplugins/colored-man-pages.plugin.zsh" >> .zshrc
 echo "source ~/.zshplugins/sudo.plugin.zsh" >> .zshrc
 source  ~/.zshrc
+usermon -s /bin/zsh $name
