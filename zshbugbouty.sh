@@ -17,11 +17,11 @@ echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >> ~/.zshrc
 mkdir ~/.zshplugins
 cd
 curl https://raw.githubusercontent.com/virtualshoot/scriptsPersonales/master/p10k.zsh -o .p10k.zsh
-rmk lsd-musl_0.17.0_amd64.deb
-rmk bat_0.13.0_amd64.deb
 echo "function rmk(){
 scrub -p dod \$1; shred -zun 10 -v \$1
 }" >> .zshrc
+rmk lsd-musl_0.17.0_amd64.deb
+rmk bat_0.13.0_amd64.deb
 echo "SAVEHIST=5000" >> .zshrc
 echo "HISTFILE=~/.zsh_history" >> .zshrc
 echo "export HISTTIMEFORMAT='%F %T : '" >> .zshrc
