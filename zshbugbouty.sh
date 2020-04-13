@@ -37,5 +37,6 @@ echo "source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh" >> .zshrc
 echo "source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> .zshrc
 echo "source ~/.zshplugins/colored-man-pages.plugin.zsh" >> .zshrc
 echo "source ~/.zshplugins/sudo.plugin.zsh" >> .zshrc
+sudo usermod -s /bin/zsh $name
 source  ~/.zshrc
-sudo usermon -s /bin/zsh $name
+
