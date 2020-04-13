@@ -2,7 +2,7 @@
 # Fuente: https://awesomelists.net/275-ZSH%20Plugins/0-All--page1--sortBy-stars/
 # Fuente: https://github.com/nahamsec/bbht
 
-sudo apt install curl wget man zsh
+sudo apt install curl wget man zsh scrub
 wget https://github.com/Peltoche/lsd/releases/download/0.17.0/lsd-musl_0.17.0_amd64.deb
 wget https://github.com/sharkdp/bat/releases/download/v0.13.0/bat_0.13.0_amd64.deb
 sudo dpkg -i lsd-musl_0.17.0_amd64.deb
@@ -20,9 +20,8 @@ curl https://raw.githubusercontent.com/virtualshoot/scriptsPersonales/master/p10
 echo "function rmk(){
 scrub -p dod \$1; shred -zun 10 -v \$1
 }" >> .zshrc
-source .zshrc
-rmk lsd-musl_0.17.0_amd64.deb
-rmk bat_0.13.0_amd64.deb
+rm lsd-musl_0.17.0_amd64.deb
+rm bat_0.13.0_amd64.deb
 echo "SAVEHIST=5000" >> .zshrc
 echo "HISTFILE=~/.zsh_history" >> .zshrc
 echo "export HISTTIMEFORMAT='%F %T : '" >> .zshrc
