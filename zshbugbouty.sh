@@ -20,6 +20,7 @@ curl https://raw.githubusercontent.com/virtualshoot/scriptsPersonales/master/p10
 echo "function rmk(){
 scrub -p dod \$1; shred -zun 10 -v \$1
 }" >> .zshrc
+source .zshrc
 rmk lsd-musl_0.17.0_amd64.deb
 rmk bat_0.13.0_amd64.deb
 echo "SAVEHIST=5000" >> .zshrc
