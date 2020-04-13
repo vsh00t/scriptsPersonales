@@ -31,10 +31,10 @@ echo "alias la='lsd -a --group-dirs=first'" >> .zshrc
 echo "alias l='lsd --group-dirs=first'" >> .zshrc
 echo "alias ls='lsd -lha --group-dirs=first'" >> .zshrc
 echo "alias man='/usr/bin/man'" >> .zshrc
-source .zshrc
 curl https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/colored-man-pages/colored-man-pages.plugin.zsh -o ~/.zshplugins/colored-man-pages.plugin.zsh
 curl https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/sudo/sudo.plugin.zsh -o ~/.zshplugins/sudo.plugin.zsh 
 echo "source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh" >> .zshrc
 echo "source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> .zshrc
 echo "source ~/.zshplugins/colored-man-pages.plugin.zsh" >> .zshrc
 echo "source ~/.zshplugins/sudo.plugin.zsh" >> .zshrc
+source  ~/.zshrc
