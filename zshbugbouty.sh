@@ -2,12 +2,16 @@
 # Fuente: https://awesomelists.net/275-ZSH%20Plugins/0-All--page1--sortBy-stars/
 # Fuente: https://github.com/nahamsec/bbht
 name=$(whoami)
-sudo apt install curl wget man zsh scrub
+sudo apt update
+sudo apt upgrade
+sudo apt install curl wget man zsh scrub git
 wget https://github.com/Peltoche/lsd/releases/download/0.17.0/lsd-musl_0.17.0_amd64.deb
 wget https://github.com/sharkdp/bat/releases/download/v0.13.0/bat_0.13.0_amd64.deb
+wget https://download.opensuse.org/repositories/shells:/zsh-users:/zsh-autosuggestions/Debian_10/amd64/zsh-autosuggestions_0.5.0+3.1_amd64.deb
+sudo dpkg -i zsh-autosuggestions_0.5.0+3.1_amd64.deb
 sudo dpkg -i lsd-musl_0.17.0_amd64.deb
 sudo dpkg -i bat_0.13.0_amd64.deb
-sudo apt install zsh-autosuggestions zsh-syntax-highlighting -y 
+sudo apt install zsh-syntax-highlighting -y 
 git clone https://github.com/nahamsec/bbht.git
 cd bbht
 chmod +x install.sh
