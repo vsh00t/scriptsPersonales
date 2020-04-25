@@ -43,6 +43,5 @@ echo "source ~/.zshplugins/colored-man-pages.plugin.zsh" >> .zshrc
 echo "source ~/.zshplugins/sudo.plugin.zsh" >> .zshrc
 sudo usermod -s /bin/zsh $name
 source  ~/.zshrc
-apt install python3 python3-pip
 
 
