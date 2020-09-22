@@ -1,6 +1,4 @@
-# Fuente: https://www.youtube.com/watch?v=MF4qRSedmEs
-# Fuente: https://awesomelists.net/275-ZSH%20Plugins/0-All--page1--sortBy-stars/
-# Fuente: https://github.com/nahamsec/bbht
+
 name=$(whoami)
 sudo apt update
 sudo apt upgrade
@@ -43,5 +41,22 @@ echo "source ~/.zshplugins/colored-man-pages.plugin.zsh" >> .zshrc
 echo "source ~/.zshplugins/sudo.plugin.zsh" >> .zshrc
 sudo usermod -s /bin/zsh $name
 source  ~/.zshrc
+
+## Software 
+
+https://github.com/OWASP/Amass
+https://github.com/shmilylty/OneForAll
+https://github.com/danielmiessler/SecLists
+https://github.com/nahamsec/lazys3
+https://github.com/initstring/cloud_enum
+https://github.com/hisxo/gitGraber
+https://github.com/tomnomnom/httprobe
+masscan
+https://github.com/Ice3man543/SubOver
+fuff, dirsearch, dirbuster
+waybackurls
+
+Burpbounty
+OpenList
 
 
