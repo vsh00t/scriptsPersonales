@@ -1,0 +1,73 @@
+import sqlite3
+from datetime import datetime, timedelta
+import psycopg2
+
+# Conexión a la base de datos de PostgreSQL
+conn = psycopg2.connect(
+    dbname="postgres",
+    user="USUARIOPOSTGRES",
+    password="PASSWORDPOSTGRES",
+    host="localhost",
+    port="5432"
+)
+
+#postgresql_cursor = postgresql_connection.cursor()
+
+cur = conn.cursor()
+
+# Conexión a la base de datos SQLite
+sqlite_conn = sqlite3.connect("/root/script/postgres_monitor.db")
+sqlite_cur = sqlite_conn.cursor()
+
+# Crear tabla en SQLite si no existe
+sqlite_cur.execute("""
+CREATE TABLE IF NOT EXISTS slow_queries (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    query TEXT,
+    mean_time REAL,
+    work_mem INT,
+    timestamp TIMESTAMP
+)
+""")
+
+# Obtener las consultas que han tardado más de 60 segundos en promedio
+time_limit = datetime.now() - timedelta(minutes=60)
+cur.execute("""
+WITH slow_statements AS (
+    SELECT query, mean_time
+    FROM pg_stat_statements
+    WHERE mean_time > 60000 AND calls > 0
+)
+SELECT ss.query, ss.mean_time
+FROM slow_statements ss
+JOIN pg_stat_activity psa ON ss.query = psa.query
+WHERE psa.query_start > %s
+""", (time_limit,))
+
+slow_queries = cur.fetchall()
+
+# Obtener el valor de work_mem en la configuración de PostgreSQL
+cur.execute("SHOW work_mem;")
+work_mem = cur.fetchone()[0]
+
+# Convertir work_mem a un valor entero en kilobytes
+if 'kB' in work_mem:
+    work_mem = int(work_mem.replace('kB', ''))
+elif 'MB' in work_mem:
+    work_mem = int(work_mem.replace('MB', '')) * 1024
+elif 'GB' in work_mem:
+    work_mem = int(work_mem.replace('GB', '')) * 1024 * 1024
+
+# Almacenar las consultas lentas y el valor de work_mem en la base de datos SQLite
+for query, mean_time in slow_queries:
+    sqlite_cur.execute("""
+    INSERT INTO slow_queries (query, mean_time, work_mem, timestamp)
+    VALUES (?, ?, ?, ?)
+    """, (query, mean_time, work_mem, datetime.now()))
+
+# Guardar cambios y cerrar conexiones
+sqlite_conn.commit()
+cur.close()
+conn.close()
+sqlite_cur.close()
+sqlite_conn.close()
