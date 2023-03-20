@@ -1,0 +1,60 @@
+import sqlite3
+import os
+from datetime import datetime, timedelta
+from PIL import Image, ImageDraw, ImageFont
+from dateutil.parser import parse
+
+# Conectar con la base de datos SQLite
+conn = sqlite3.connect("/root/script/postgres_monitor.db")
+cur = conn.cursor()
+
+# Obtener los datos de la última hora
+time_limit = datetime.now() - timedelta(hours=1)
+cur.execute("""
+    SELECT query, mean_time, work_mem, timestamp
+    FROM slow_queries
+    WHERE timestamp > ?
+""", (time_limit,))
+
+data = cur.fetchall()
+
+# Crear y guardar la imagen solo si hay datos
+if data:
+    # Crear una imagen y un objeto de dibujo
+    img = Image.new("RGB", (1400, 500), color="white")
+    d = ImageDraw.Draw(img)
+
+    # Cargar la fuente
+    font = ImageFont.truetype("/root/script/arial.ttf", 16)
+
+    # Dibujar los encabezados de la tabla
+    header = ["Query", "Mean Time (s)", "Work Mem (MB)", "Timestamp"]
+    x, y = 10, 10
+    for text in header:
+        d.text((x, y), text, font=font, fill="black")
+        x += 300
+
+    # Dibujar los datos de la tabla
+    y += 30
+    for row in data:
+        query, mean_time, work_mem, timestamp = row
+        mean_time = int(mean_time / 1000)  # Convertir a segundos sin decimales
+        work_mem = int(work_mem / 1024)  # Convertir a MB
+        timestamp = parse(timestamp).strftime("%H:%M:%S")  # Mostrar solo hora:minuto:segundo
+
+        x = 10
+        d.text((x, y), str(query), font=font, fill="black")
+        y += 30
+
+        x = 10
+        for value in ["Mean Time: " + str(mean_time), "Work Mem: " + str(work_mem), "Timestamp: " + str(timestamp)]:
+            d.text((x, y), str(value), font=font, fill="black")
+            x += 300
+        y += 30
+
+    # Guardar la imagen
+    img.save("/root/script/postgres_monitor_table.jpg")
+    # Enviar la imagen a través de Telegram
+    os.system(f"/usr/local/bin/telegram-send --image /root/script/postgres_monitor_table.jpg --caption 'Consultas Lentas en {os.uname().nodename}'")
+else:
+    print("No hay datos para mostrar en la ultima hora.")
