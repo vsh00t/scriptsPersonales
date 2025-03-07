@@ -31,17 +31,15 @@ counts = {
 # Buscar archivos XXXX_users.json y XXXX_computers.json en el directorio
 user_files = []
 computer_files = []
-pattern_users = re.compile(r"\d+_users\.json$")
-pattern_computers = re.compile(r"\d+_computers\.json$")
 
 for file in os.listdir(args.directory):
-    if pattern_users.match(file):
+    if patterns["usuarios"].match(file):
         user_files.append(os.path.join(args.directory, file))
-    elif pattern_computers.match(file):
+    elif patterns["computadores"].match(file):
         computer_files.append(os.path.join(args.directory, file))
 
 if not user_files and not computer_files:
-    print("No se encontraron archivos XXXX_users.json o XXXX_computers.json en el directorio especificado.")
+    print("No se encontraron archivos *_users.json o *_computers.json en el directorio especificado.")
     exit(1)
 
 # Función para extraer nombres desde un archivo JSON
